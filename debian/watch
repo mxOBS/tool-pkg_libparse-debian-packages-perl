@@ -1,0 +1,2 @@
+version=3
+http://search.cpan.org/dist/Parse-Debian-Packages/   .*/Parse-Debian-Packages-v?(\d[\d.-]+)\.(?:tar(?:\.gz|\.bz2)?|tgz|zip)$
