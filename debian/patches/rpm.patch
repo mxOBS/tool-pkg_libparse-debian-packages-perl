@@ -1,0 +1,136 @@
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ libparse-debian-packages-perl (0.03-1) unstable; urgency=low
+ .
+   [ Ansgar Burchardt ]
+   * Email change: Ansgar Burchardt -> ansgar@debian.org
+   * debian/control: Convert Vcs-* fields to Git.
+ .
+   [ gregor herrmann ]
+   * Remove alternative (build) dependencies that are already satisfied
+     in oldstable.
+ .
+   [ gregor herrmann ]
+   * New upstream release.
+   * debian/rules: drop buildsystem, Build.PL is gone.
+   * Drop bug-579063.patch, fixed upstream.
+   * debian/copyright: update to Copyright-Format 1.0, refresh license
+     stanzas.
+   * Set debhelper compatibility level to 8.
+   * Bump Standards-Version to 3.9.3 (no changes).
+   * Add /me to Uploaders.
+   * Make short description a noun phrase.
+Author: gregor herrmann <gregoa@debian.org>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- /dev/null
++++ libparse-debian-packages-perl-0.03/perl-Parse-Debian-Packages.spec
+@@ -0,0 +1,91 @@
++#
++# spec file for package perl-Parse-Debian-Packages
++#
++# Copyright (c) 2015 Josua Mayer <privacy@not.given>
++#
++# Permission is hereby granted, free of charge, to any person obtaining a copy
++# of this software and associated documentation files (the "Software"), to deal
++# in the Software without restriction, including without limitation the rights
++# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++# copies of the Software, and to permit persons to whom the Software is
++# furnished to do so, subject to the following conditions:
++#
++# The above copyright notice and this permission notice shall be included in
++# all copies or substantial portions of the Software.
++#
++# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++# THE SOFTWARE.
++#
++
++#
++# Summary and description taken from debian package on Feb 8 2015:
++#
++# Copyright:
++#  2004, Joachim Breitner <nomeata@debian.org>
++#  2010, Ansgar Burchardt <ansgar@debian.org>
++#  2012, gregor herrmann <gregoa@debian.org>
++# License: Artistic or GPL-1+
++#
++# License: Artistic
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the Artistic License, which comes with Perl.
++#
++# On Debian systems, the complete text of the Artistic License can be
++# found in `/usr/share/common-licenses/Artistic'.
++#
++# License: GPL-1+
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 1, or (at your option)
++# any later version.
++#
++# On Debian systems, the complete text of version 1 of the GNU General
++# Public License can be found in `/usr/share/common-licenses/GPL-1'.
++#
++
++Name: perl-Parse-Debian-Packages
++Version: 0.03
++Release: 1
++License: Artistic or GPL-1.0+
++Url: http://search.cpan.org/dist/Parse-Debian-Packages/
++Group: Development/Libraries/Perl
++
++BuildArch: noarch
++Source: %{name}-%{version}.tar.xz
++BuildRequires: perl
++BuildRequires: perl-macros
++BuildRequires: perl(ExtUtils::MakeMaker)
++BuildRequires: perl(Test::More)
++
++Requires: perl = %{perl_version}
++Requires: perl(strict)
++
++Summary: Module for parsing the data from a Debian Packages.gz
++%description
++Parse::Debian::Packages parses the Packages files used by the Debian
++package management tools.
++
++It presents itself as an iterator.  Each call of the ->next method
++will return the next package found in the file.
++
++%prep
++%setup -q
++
++%build
++perl Makefile.PL
++make
++
++%install
++%perl_make_install
++rm -rfv %buildroot%perl_archlib
++%perl_gen_filelist
++
++%files -f %{name}.files
++%defattr(-,root,root)
++
++%changelog
